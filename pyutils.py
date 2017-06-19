@@ -2,6 +2,7 @@
 
 import math
 import os
+import numpy as np
 
 def maximum_rectangle(l):
     if (l==0):
@@ -29,3 +30,20 @@ def ensure_dir(path):
 def normalize(x, x_max, x_min):
     return (x - x_min) / (x_max - x_min)
 
+
+def untiled_image(square, shape):
+    """
+        square.shape is (a, a)
+        shape is (n, m, m)
+    """
+    cube = np.ndarray(shape)
+
+    start, end = 0, square.shape[0]
+    intval, k = shape[1], 0
+    for i_s in range(start, end, intval):
+        i_e = i_s + intval
+        for j_s in range(start, end, intval):
+            j_e = j_s + intval
+            cube[k] = square[i_s:i_e].T[j_s:j_e].T
+            k += 1
+    return cube
